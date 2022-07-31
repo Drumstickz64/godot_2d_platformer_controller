@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Platform.tscn" type="PackedScene" id=3]
+
+[node name="Main" type="Node2D"]
+
+[node name="Ground" parent="." instance=ExtResource( 1 )]
+position = Vector2( 960, 1048 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 944, 952 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+update_rotation = false
+update_scale = false
+
+[node name="Platform" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1312, 800 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 944, 952 )
+rotation = -1.49012e-08
+current = true
+drag_margin_h_enabled = true
+smoothing_enabled = true
+smoothing_speed = 6.0

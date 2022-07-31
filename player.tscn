@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://platformer_character_2d.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 32 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+max_move_speed = 850.0
+acceleration = 6500.0
+friction = 13000.0
+jump_power = 1200.0
+gravity = 3200.0
+fall_gravity_modifier = 1.5
+early_jump_end_gravity_modifier = 2.0
+max_fall_speed = 2000.0
+__cayote_timer = NodePath("CayoteTimer")
+__jump_buffer_clear_timer = NodePath("JumpBufferClearTimer")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -32, -64, 32, -64, 32, 64, -32, 64 )
+
+[node name="TopShape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -32 )
+shape = SubResource( 1 )
+
+[node name="BottomShape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 32 )
+shape = SubResource( 2 )
+
+[node name="CayoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpBufferClearTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
