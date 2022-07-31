@@ -11,19 +11,19 @@ export var gravity: float
 export var fall_gravity_modifier := 1.0
 export var early_jump_end_gravity_modifier := 1.0
 export var max_fall_speed: float
-export var __cayote_timer: NodePath
+export var __coyote_timer: NodePath
 export var __jump_buffer_clear_timer: NodePath
 
 var velocity: Vector2
 var hinput: float
 var _did_jump: bool
-var _did_cayote: bool
+var _did_coyote: bool
 var _ended_jump_early: bool
 var _is_jump_buffered: bool
 var _is_at_jump_apex: bool
 var _is_airborne: bool
 
-onready var cayote_timer: Timer = get_node(__cayote_timer)
+onready var coyote_timer: Timer = get_node(__coyote_timer)
 onready var jump_buffer_clear_timer: Timer = get_node(__jump_buffer_clear_timer)
 
 
@@ -49,8 +49,8 @@ func _physics_process(delta: float) -> void:
 
 	_is_at_jump_apex = Input.is_action_pressed("jump") and _did_jump and abs(velocity.y) <= 96.0
 
-	if should_cayote():
-		activate_cayote_time()
+	if should_coyote():
+		activate_coyote_time()
 	
 	if _is_jump_buffered and can_jump():
 		jump()
@@ -82,23 +82,23 @@ func jump() -> void:
 
 
 func can_jump() -> bool:
-	return is_on_floor() or (not _did_jump and not cayote_timer.is_stopped())
+	return is_on_floor() or (not _did_jump and not coyote_timer.is_stopped())
 
 
 func on_land() -> void:
 	_is_airborne = false
 	_did_jump = false
-	_did_cayote = false
+	_did_coyote = false
 	_ended_jump_early = false
 
 
-func should_cayote() -> bool:
-	return not is_on_floor() and not _did_jump and not _did_cayote
+func should_coyote() -> bool:
+	return not is_on_floor() and not _did_jump and not _did_coyote
 
 
-func activate_cayote_time() -> void:
-	cayote_timer.start()
-	_did_cayote = true
+func activate_coyote_time() -> void:
+	coyote_timer.start()
+	_did_coyote = true
 
 
 func apply_friction(delta: float) -> void:

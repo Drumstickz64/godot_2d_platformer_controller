@@ -18,7 +18,7 @@ gravity = 3200.0
 fall_gravity_modifier = 1.5
 early_jump_end_gravity_modifier = 2.0
 max_fall_speed = 2000.0
-__cayote_timer = NodePath("CayoteTimer")
+__coyote_timer = NodePath("CoyoteTimer")
 __jump_buffer_clear_timer = NodePath("JumpBufferClearTimer")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
@@ -32,7 +32,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, 32 )
 shape = SubResource( 2 )
 
-[node name="CayoteTimer" type="Timer" parent="."]
+[node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
 
