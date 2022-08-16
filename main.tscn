@@ -22,7 +22,6 @@ position = Vector2( 1312, 800 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 944, 952 )
-rotation = -1.49012e-08
 current = true
 drag_margin_h_enabled = true
 smoothing_enabled = true

@@ -6,6 +6,7 @@ const APEX_SPEED_BONUS := 1.2
 export var max_move_speed: float
 export var acceleration: float
 export var friction: float
+export var drag: float
 export var jump_power: float
 export var gravity: float
 export var fall_gravity_modifier := 1.0
@@ -42,10 +43,11 @@ func _physics_process(delta: float) -> void:
 	
 	apply_gravity(delta)
 	
-	if _is_airborne and is_on_floor():
-		on_land()
+	if is_on_floor():
+		if _is_airborne:
+			on_land()
 	else:
-		_is_airborne = true
+			_is_airborne = true
 
 	_is_at_jump_apex = Input.is_action_pressed("jump") and _did_jump and abs(velocity.y) <= 96.0
 
@@ -63,7 +65,10 @@ func _physics_process(delta: float) -> void:
 		apply_acceleration(delta)
 
 	if not sign(hinput) == sign(velocity.x):
-		apply_friction(delta)
+		if _is_airborne:
+			apply_deceleration(delta, drag)
+		else:
+			apply_deceleration(delta, friction)
 	
 	velocity = move_and_slide(velocity, Vector2.UP, true)
 
@@ -101,8 +106,8 @@ func activate_coyote_time() -> void:
 	_did_coyote = true
 
 
-func apply_friction(delta: float) -> void:
-	velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+func apply_deceleration(delta: float, deceleration: float) -> void:
+	velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
 
 
 func apply_acceleration(delta: float) -> void:
